@@ -1,0 +1,18 @@
+{
+    "ecmaFeatures": {
+        "blockBindings": true,
+        "forOf": true,
+        "destructuring": true,
+        "arrowFunctions": true,
+        "templateStrings": true,
+        "generators": true
+    },
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "extends": "airbnb/base",
+    "globals" :{
+        "require": true
+    }
+}
