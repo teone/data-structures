@@ -1,0 +1,3 @@
+# Single Linked List
+
+A Singly Linked List is a linear collection of data elements, called nodes pointing to the next node by means of pointer. It is a data structure consisting of a group of nodes which together represent a sequence. Under the simplest form, each node is composed of data and a reference (in other words, a link) to the next node in the sequence. (From Wikipedia)[https://en.wikipedia.org/wiki/Linked_list]
