@@ -3,10 +3,11 @@ class Node {
   constructor(val){
     this.data = val;
     this.next = null;
+    this.previous = null;
   }
 }
 
-class SingleLinkedList {
+class DoubleLinkedList {
   constructor(){
     this.head = null;
     this.tail = null;
@@ -20,6 +21,7 @@ class SingleLinkedList {
       this.tail = node;
     }
     else{
+      node.previous = this.tail;
       this.tail.next = node;
       this.tail = node;
     }
@@ -30,10 +32,12 @@ class SingleLinkedList {
   addAfter(val, after){
     const node = new Node(val);
     const parentNode = this.get(after);
-    if(parentNode){
-      node.next = parentNode.next;
-      parentNode.next = node;
-    }
+    
+    parentNode.next.previous = node;
+    node.previous = parentNode;
+    node.next = parentNode.next;
+    parentNode.next = node;
+
     this.containedValues++;
     return this;
   }
@@ -43,7 +47,7 @@ class SingleLinkedList {
       if(node.data === val){
         return node;
       }
-      else if (!node.next){
+      else if(!node.next){
         return null;
       }
       return _get(node.next);
@@ -51,32 +55,50 @@ class SingleLinkedList {
   }
 
   remove(val){
-    const _this = this;
     const node = this.get(val);
-    if(!node){
-      return this;
+    const previousNode = node.previous;
+    const nextNode = node.next;
+
+    if(previousNode){
+      previousNode.next = nextNode;
     }
-    return (function removeVal(prev, curr){
-      if(curr.data === val){
-        prev.next = curr.next
-        if(curr.data === _this.head.data){
-          _this.head = curr.next;
-        }
-        return _this;
-      }
-      return removeVal(curr, curr.next);
-    })(this.head, this.head);
+    else{
+      // it is the head
+      this.head = nextNode;
+    }
+
+    if(nextNode){
+      nextNode.previous = previousNode;
+    }
+    else{
+      // it is the tail
+      this.tail = previousNode;
+    }
+
+    this.containedValues--;
+    return this;
   }
 
   traverse(fn){
     const _this = this;
-    return(function _traverse(node){
+    return (function _traverse(node){
       node.data = fn(node.data);
       if(!node.next){
         return _this;
       }
       return _traverse(node.next);
     })(this.head);
+  }
+
+  traverseReverse(fn){
+    const _this = this;
+    return (function _traverse(node){
+      node.data = fn(node.data);
+      if(!node.previous){
+        return _this;
+      }
+      return _traverse(node.previous);
+    })(this.tail); 
   }
 
   contain(val){
@@ -92,11 +114,10 @@ class SingleLinkedList {
       if(!node.next) {
         return `${string}${node.data} ]`;
       }
-      const chunk = `${string}${node.data} -> `;
+      const chunk = `${string}${node.data} <-> `;
       return printNextVal(chunk, node.next);
     })('[ ', this.head);
   }
-
 }
 
-module.exports = SingleLinkedList;
+module.exports = DoubleLinkedList;
