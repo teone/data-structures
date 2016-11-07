@@ -1,0 +1,3 @@
+# Binary Search Tree
+
+A Binary Search Tree data structure is a rooted binary tree, whose internal nodes each store a key (and optionally, an associated value) and each have two distinguished sub-trees, commonly denoted left and right. The tree additionally satisfies the binary search tree property, which states that the key in each node must be greater than all keys stored in the left sub-tree, and smaller than all keys in right sub-tree. (From Wikipedia)[https://en.wikipedia.org/wiki/Binary_search_tree]
